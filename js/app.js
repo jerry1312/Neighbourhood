@@ -1,78 +1,70 @@
 var models = [
   {
-    placename: 'Pavitra Jewellers',
-    placeID: "ChIJp6XLRjqTDzkRfKbhXWm44a4",
+    placename: 'Siddharth Jewellers',
+    placeID: "4ed9f8137ee5e8e3e65285ec",
     selection: false,
     show: true,
-    lat: 30.711745,
-    lng: 76.844899
+    lat: 30.736847,
+    lng: 76.749300
   },
   {
     placename: 'Talwar Jewellers',
-    placeID: "ChIJecW2vKTtDzkRvUTRfC-uFJ8",
+    placeID: "4db832a2f7b15ca52ce4c975",
     selection: false,
     show: true,
-    lat: 30.735037,
-    lng: 76.769475
+    lat: 30.735002, 
+    lng: 76.769505
   },
   {
-    placename: 'Sunder Jewellers',
-    placeID: "ChIJMUlimaftDzkRULygSioUV4U",
+    placename: 'Jagdish Jewellers',
+    placeID: "5107c64be4b0addb4bb276cb",
     selection: false,
     show: true,
-    lat: 30.725833, 
-    lng: 76.759319
+    lat: 30.728421, 
+    lng: 76.770890
   },
   {
-    placename: 'Saraf The Jeweller',
-    placeID: "ChIJO1VVVSmTDzkRT9GnMsZrVD4",
+    placename: 'Krishna Jeweller',
+    placeID: "5704b503498e01f40606efa3",
     selection: false,
     show: true,
-    lat: 30.716733, 
-    lng: 76.833031
+    lat: 30.724702,  
+    lng: 76.759249
   },
   {
-    placename: 'Anurag Jewellers',
-    placeID: "ChIJZeyM0zuTDzkR-Nu1aCvbkPw",
+    placename: 'Pure Gold Jewellers',
+    placeID: "519322da498e1228f7f01c85",
     selection: false,
     show: true,
-    lat: 30.719528, 
-    lng: 76.831700
+    lat: 30.705893, 
+    lng: 76.800629
   },
 
   {
-    placename: 'Tanishq Jewellers',
-    placeID: "ChIJBwAAAEPtDzkRAkqVZ-E5-es",
+    placename: 'Kushals Fashion Jewellery',
+    placeID: "51a099a0498e1473b6e3e5a1",
     selection: false,
     show: true,
-    lat: 30.710207,
-    lng: 76.839452
+    lat: 30.705554, 
+    lng: 76.801233
   },
   {
-    placename: 'PC Jewellers',
-    placeID: "ChIJ_____67tDzkR9Ugr1gEZenI",
+    placename: 'MoolJI Diamonds',
+    placeID: "511659afe4b0805e11936b78",
     selection: false,
     show: true,
-    lat: 30.735499, 
-    lng: 76.768950
+    lat: 30.725328,  
+    lng: 76.805696
   },
   {
-    placename: 'Ganpati Jewellers',
-    placeID: "ChIJGZR0rTGTDzkR93Th6znuphk",
+    placename: 'Tanishq',
+    placeID: "5177b676e4b0621d2e03041c",
     selection: false,
     show: true,
-    lat: 30.708938, 
-    lng: 76.840081
+    lat: 30.710216,
+    lng: 76.839584
   },
-  {
-    placename: 'Navkarr Jewellers',
-    placeID: "ChIJnRqq1LLtDzkRgTq-8ZLoM0A",
-    selection: false,
-    show: true,
-    lat: 30.718414, 
-    lng: 76.765721
-  },
-
+  
 
 ];
 
