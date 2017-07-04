@@ -101,9 +101,10 @@ var viewModel = function () {
     return markerImage;
   };
 
-  var highlightedIcon = self.makeMarkerIcon('blue');
+  var highlightedIcon = self.makeMarkerIcon('green');
   var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-  var myIcon = iconBase + "info-i_maps.png";
+  var myIcon = iconBase + "ranger_station.png";
+
 
   models.forEach(function (counter) {
 
@@ -219,7 +220,7 @@ var viewModel = function () {
         infowindow.open(map, counter_marker);
       },
       error: function (e) {
-        self.error("Foursquare data is invalid,Please Try Again ");
+        self.error("Foursquare Data is Invalid So,Please Try Again ");
       }
     });
   };
@@ -271,90 +272,3 @@ var viewModel = function () {
   
 };
 
-var map;
-var infoWindow;
-
-function initMap() {
-  //create a style array to use with the map.
-  var styles = [
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry.stroke',
-      stylers: [
-        { color: '#efe9e4' },
-        { lightness: -40 }
-      ]
-    },
-    {
-      featureType: 'water',
-      stylers: [
-        { color: '#19a0d8' }
-      ]
-    },
-    {
-      featureType: 'administrative',
-      elementType: 'labels.text.stroke',
-      stylers: [
-        { color: '#ffffff' },
-        { weight: 6 }
-      ]
-    },
-    {
-      featureType: 'water',
-      elementType: 'labels.text.stroke',
-      stylers: [
-        { lightness: 100 }
-      ]
-    },
-    {
-      featureType: 'transit.station',
-      stylers: [
-        { weight: 9 },
-        { hue: '#e85113' }
-      ]
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'labels.icon',
-      stylers: [
-        { visibility: 'off' }
-      ]
-    },
-    {
-      featureType: 'administrative',
-      elementType: 'labels.text.fill',
-      stylers: [
-        { color: '#e85113' }
-      ]
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry.fill',
-      stylers: [
-        { color: '#efe9e4' },
-        { lightness: -25 }
-      ]
-    },
-    {
-      featureType: 'poi',
-      elementType: 'geometry',
-      stylers: [
-        { visibility: 'on' },
-        { color: '#f0e4d3' }
-      ]
-    }
-  ];
-  map = new google.maps.Map(
-    document.getElementById('map'), {
-      center: { lat: 30.723490, lng: 76.767508 },
-      zoom: 12,
-      mapTypeControl: false,
-      styles: styles
-    });
-  infowindow = new google.maps.InfoWindow();
-  ko.applyBindings(new viewModel());
-}
-
-function errorHandling() {
-  alert("Error Loading Google Maps API!");
-}
