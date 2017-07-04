@@ -1,7 +1,7 @@
 var models = [
   {
     placename: 'Pavitra Jewellers',
-    cinemaID: "ChIJp6XLRjqTDzkRfKbhXWm44a4",
+    placeID: "ChIJp6XLRjqTDzkRfKbhXWm44a4",
     selection: false,
     show: true,
     lat: 30.711745,
@@ -9,7 +9,7 @@ var models = [
   },
   {
     placename: 'Talwar Jewellers',
-    cinemaID: "50a351abe4b0850330656105",
+    placeID: "ChIJecW2vKTtDzkRvUTRfC-uFJ8",
     selection: false,
     show: true,
     lat: 30.735037,
@@ -17,7 +17,7 @@ var models = [
   },
   {
     placename: 'Sunder Jewellers',
-    cinemaID: "50d43c3ce4b0621a680d3bf6",
+    placeID: "ChIJMUlimaftDzkRULygSioUV4U",
     selection: false,
     show: true,
     lat: 30.725833, 
@@ -25,7 +25,7 @@ var models = [
   },
   {
     placename: 'Saraf The Jeweller',
-    cinemaID: "4ccc5d0975dcbfb7d05ba764",
+    placeID: "ChIJO1VVVSmTDzkRT9GnMsZrVD4",
     selection: false,
     show: true,
     lat: 30.716733, 
@@ -33,7 +33,7 @@ var models = [
   },
   {
     placename: 'Anurag Jewellers',
-    cinemaID: "51c480e1498e73948d26e8be",
+    placeID: "ChIJZeyM0zuTDzkR-Nu1aCvbkPw",
     selection: false,
     show: true,
     lat: 30.719528, 
@@ -42,7 +42,7 @@ var models = [
 
   {
     placename: 'Tanishq Jewellers',
-    cinemaID: "4b40c527f964a520eaba25e3",
+    placeID: "ChIJBwAAAEPtDzkRAkqVZ-E5-es",
     selection: false,
     show: true,
     lat: 30.710207,
@@ -50,7 +50,7 @@ var models = [
   },
   {
     placename: 'PC Jewellers',
-    cinemaID: "58d528a1da54ae3953b2f523",
+    placeID: "ChIJ_____67tDzkR9Ugr1gEZenI",
     selection: false,
     show: true,
     lat: 30.735499, 
@@ -58,7 +58,7 @@ var models = [
   },
   {
     placename: 'Ganpati Jewellers',
-    cinemaID: "4da43e5463b5a35d20a4211a",
+    placeID: "ChIJGZR0rTGTDzkR93Th6znuphk",
     selection: false,
     show: true,
     lat: 30.708938, 
@@ -66,7 +66,7 @@ var models = [
   },
   {
     placename: 'Navkarr Jewellers',
-    cinemaID: "5207dd7d8bbd2f9376e1dce0",
+    placeID: "ChIJnRqq1LLtDzkRgTq-8ZLoM0A",
     selection: false,
     show: true,
     lat: 30.718414, 
@@ -111,7 +111,7 @@ var viewModel = function () {
       placename: counter.placename,
       position: { lat: counter.lat, lng: counter.lng },
       show: ko.observable(counter.show),
-      cinemaID: counter.cinemaID,
+      placeID: counter.placeID,
       selection: ko.observable(counter.selection),
       animation: google.maps.Animation.DROP,
       map: map,
@@ -203,7 +203,7 @@ var viewModel = function () {
 
   self.addApiInfo = function (counter_marker) {
     $.ajax({
-      url: "https://api.foursquare.com/v2/venues/" + counter_marker.cinemaID + '?client_id=33RUTCVQOVXUZGPGME4T05JGXH010VRWMGVBKLKKVTZR52GK&client_secret=BIG1WPWORXNTJGB55HJ5XKRZYXVJDITSLJ12KFPMXAEBJILT&v=20170527',
+      url: "https://api.foursquare.com/v2/venues/" + counter_marker.placeID + '?client_id=33RUTCVQOVXUZGPGME4T05JGXH010VRWMGVBKLKKVTZR52GK&client_secret=BIG1WPWORXNTJGB55HJ5XKRZYXVJDITSLJ12KFPMXAEBJILT&v=20170527',
       dataType: "json",
       success: function (data) {
 
@@ -234,14 +234,14 @@ var viewModel = function () {
   // calls every keydown from input box
   self.applyFilter = function() {
 
-    var currentFilter = self.filterText();
+    var currentFilter = self.place_input();
     infowindow.close();
 
     //filter the list as user seach
     if (currentFilter.length === 0) {
 			self.setAllShow(true);
 		} else {
-			for (var i = 0; i < self.no_places; i++) {
+			for (var i = 0; i < self.selected_place().length; i++) {
 				if (self.selected_place()[i].placename.toLowerCase().indexOf(currentFilter.toLowerCase()) > -1) {
 					self.selected_place()[i].show(true);
 					self.selected_place()[i].setVisible(true);
