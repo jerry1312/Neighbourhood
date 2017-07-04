@@ -203,7 +203,7 @@ var viewModel = function () {
 
   self.addApiInfo = function (counter_marker) {
     $.ajax({
-      url: "https://api.foursquare.com/v2/venues/" + counter_marker.placeID + '?client_id=33RUTCVQOVXUZGPGME4T05JGXH010VRWMGVBKLKKVTZR52GK&client_secret=BIG1WPWORXNTJGB55HJ5XKRZYXVJDITSLJ12KFPMXAEBJILT&v=20170527',
+      url: "https://api.foursquare.com/v2/venues/" + counter_marker.placeID + '?client_id=Q30KETWVBUFQQ4W3NSYKWZCFKFZXB1XENK3IPAVIAUEDF3Y5&client_secret=TGBBXRCXFGGH4WS3YLL2BY0MHXMPKQD51B4DSTMXEDUSPWN0',
       dataType: "json",
       success: function (data) {
 
@@ -256,7 +256,7 @@ var viewModel = function () {
 
   // to make all marker visible
   self.setAllShow = function(showVar) {
-    for (var i = 0; i < self.no_places; i++) {
+    for (var i = 0; i < self.selected_place().length; i++) {
       self.selected_place()[i].show(showVar);
       self.selected_place()[i].setVisible(showVar);
     }
