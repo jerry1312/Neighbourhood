@@ -6,7 +6,35 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Bellefair" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+	<script type="text/javascript">
+		// Google Maps API init function
+var map;
+var infoWindow;
+
+function initMap() {
+  //create a style array to use with the map.
+ 
+  map = new google.maps.Map(
+    document.getElementById('map'), {
+      center: { lat: 30.723490, lng: 76.767508 },
+      mapTypeControl: false,
+      zoom: 12
+    });
+  infowindow = new google.maps.InfoWindow();
+  ko.applyBindings(new viewModel());
+}
+
+
+    function resolveerror(){
+      document.getElementById('map-error').innerHTML = "Error in Map!"
+    }
+	</script>
+<script src='js/knockout-3.4.2.js'></script>
+    <script src='js/jquery-3.2.1.min.js'></script>
+<script src='js/app.js'></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGVbuoM0VmxcVEwpl_eOi8FresTxWAits&libraries=drawing&v=3&callback=initMap" onerror="resolveerror()"  async defer></script>
 	
 </head>
 <body>
@@ -38,8 +66,8 @@
 				<input id="inputvalue" type="text" class="form-control" placeholder="Find new Shops" data-bind="value:place_input,valueUpdate:'afterkeydown',event:{keyup:applyFilter}">
 			</div>
 			<div class="output_places">
-				<ul class="list-group" data-bind="foreach: selected_place">
-					<li class="list-group-item" data-bind="css:{active:selection},text:placename,visible:show,click:$parent.dMark">
+				<ul class="list-group" data-bind="foreach: clicked_place">
+					<li class="list-group-item" data-bind="css:{active:selection},text:placename,visible:show,click:$parent.onMark">
 					</li>
 				</ul>
 			</div>
@@ -58,32 +86,6 @@
 	</div>
 
 </div>	<!--container-->
- <script type="text/javascript">
-		// Google Maps API init functionbng
-var map;
-var infoWindow;
-
-function initMap() {
-  //create a style array to use with the map.
  
-  map = new google.maps.Map(
-    document.getElementById('map'), {
-      center: { lat: 30.723490, lng: 76.767508 },
-      mapTypeControl: false,
-      zoom: 12
-    });
-  infowindow = new google.maps.InfoWindow();
-  ko.applyBindings(new viewModel());
-}
-
-
-    function googleError(){
-      document.getElementById('map-error').innerHTML = "Error in Map!"
-    }
-	</script>
-<script src='js/knockout-3.4.2.js'></script>
-    <script src='js/jquery-3.2.1.min.js'></script>
-<script src='js/app.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGVbuoM0VmxcVEwpl_eOi8FresTxWAits&libraries=drawing,geometry&v=3&callback=initMap" onerror="errorHandling()"  async defer></script>
 </body>
 </html>
