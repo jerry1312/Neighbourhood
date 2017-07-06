@@ -78,7 +78,7 @@ var viewModel = function () {
 
   self.error = ko.observable('');
   self.place_input = ko.observable('');
-  self.selected_place = ko.observableArray([]);
+  self.clicked_place = ko.observableArray([]);
   //This function take in color  and then create a new marker
 
   self.makeMarkerIcon = function (markerColor) {
@@ -93,10 +93,12 @@ var viewModel = function () {
     return markerImage;
   };
 
-  var highlightedIcon = self.makeMarkerIcon('green');
+  
   var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-  var mynewIcon = iconBase + "ranger_station.png";
 
+  var newIcon = iconBase + "ranger_station.png";
+
+  var mouseoverIcon = self.makeMarkerIcon('FF0000');
 
   places.forEach(function (index_marker) {
 
@@ -105,36 +107,45 @@ var viewModel = function () {
       position: { lat: index_marker.lat, lng: index_marker.lng },
       show: ko.observable(index_marker.show),
       map: map,
-      selection: ko.observable(index_marker.selection),
+      selection: ko.observable(index_marker.selection), // sets observable for checking
       animation: google.maps.Animation.DROP,
-      placeID: index_marker.placeID,
-      icon: mynewIcon,
+      placeID: index_marker.placeID, // foursquare placeid
+      icon: newIcon,
       id: 1
     });
 
-    self.selected_place.push(marker);
+    self.clicked_place.push(marker);
 
-    marker.addListener('mouseout', function () {
-      this.setIcon(mynewIcon);
-    });
-
-    marker.addListener('mouseover', function () {
-      this.setIcon(highlightedIcon);
-    });
-
+   
+   
     marker.addListener('click', function () {
       self.makeBounce(marker);
       self.populateInfoWindow(this, largeInfowindow);
       self.addApiInfo(marker);
 
     });
+
+     marker.addListener('mouseout', function () {
+      this.setIcon(newIcon);
+    });
+
+     marker.addListener('mouseover', function () {
+      this.setIcon(mouseoverIcon);
+    });
+
   });
 
   var largeInfowindow = new google.maps.InfoWindow();
-  self.no_places = self.selected_place.length;
-  self.current_place = self.selected_place[0];
 
-  self.populateInfoWindow = function (marker, infowindow) {
+  self.no_places = self.clicked_place.length;
+
+
+ 
+  self.makeBounce = function (counter_marker) {
+    counter_marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function () { counter_marker.setAnimation(null); }, 999);
+  };
+   self.populateInfoWindow = function (marker, infowindow) {
 
     // Check  infowindow is not already opened through marker.
     if (infowindow.marker != marker) {
@@ -146,52 +157,8 @@ var viewModel = function () {
         if (infowindow.marker !== null)
         infowindow.marker = null;
       infowindow.marker.setAnimation(null);
-      });
+      }); }
 
-      var streetViewService = new google.maps.StreetViewService();
-      var radius = 50;
-
-      // In case the status is OK, which means the pano was found, compute the
-      // position of the streetview image, then calculate the heading, then get a
-      // panorama from that and set the options
-
-      self.getStreetView = function (data, status) {
-
-        if (status == google.maps.StreetViewStatus.OK) {
-
-          var nearStreetViewLocation = data.location.latLng;
-          var heading = google.maps.geometry.spherical.computeHeading(
-            nearStreetViewLocation, marker.position);
-
-          infowindow.setContent('<div>' + marker.placename + '</div><div id="pano"></div>');
-
-          var panoramaOptions = {
-            position: nearStreetViewLocation,
-            pov: {
-              heading: heading,
-              pitch: 30
-            }
-          };
-
-          var panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('pano'), panoramaOptions);
-        }
-
-        else {
-          infowindow.setContent('<div>' + marker.placename + '</div>' +
-            '<div>No Street View Found</div>');
-        }
-
-      };
-
-
-
-    }
-
-  };
-  self.makeBounce = function (counter_marker) {
-    counter_marker.setAnimation(google.maps.Animation.BOUNCE);
-    setTimeout(function () { counter_marker.setAnimation(null); }, 999);
   };
 
   self.addApiInfo = function (counter_marker) {
@@ -210,15 +177,12 @@ var viewModel = function () {
         infowindow.open(map, counter_marker);
       },
       error: function (e) {
-        self.diserror("Foursquare Data is Invalid ");
+        self.showerror("Foursquare Data is Invalid ");
       }
     });
   };
 
-  self.dMark = function (marker) {
-
-    google.maps.event.trigger(marker, 'click');
-  };
+ 
   self.filterText = ko.observable('');
 
 
@@ -232,30 +196,35 @@ var viewModel = function () {
     if (currentFilter.length === 0) {
 			self.setAllShow(true);
 		} else {
-			for (var i = 0; i < self.selected_place().length; i++) {
-				if (self.selected_place()[i].placename.toLowerCase().indexOf(currentFilter.toLowerCase()) > -1) {
-					self.selected_place()[i].show(true);
-					self.selected_place()[i].setVisible(true);
+			for (var i = 0; i < self.clicked_place().length; i++) {
+				if (self.clicked_place()[i].placename.toLowerCase().indexOf(currentFilter.toLowerCase()) > -1) {
+					self.clicked_place()[i].show(true);
+					self.clicked_place()[i].setVisible(true);
 				} else {
-					self.selected_place()[i].show(false);
-					self.selected_place()[i].setVisible(false);
+					self.clicked_place()[i].show(false);
+					self.clicked_place()[i].setVisible(false);
 				}
 			}
     }
     infowindow.close();
   };
+   self.onMark = function (marker) {
+
+    google.maps.event.trigger(marker, 'click');
+  };
+
 
   // to make all marker visible
   self.setAllShow = function(showVar) {
-    for (var i = 0; i < self.selected_place().length; i++) {
-      self.selected_place()[i].show(showVar);
-      self.selected_place()[i].setVisible(showVar);
+    for (var i = 0; i < self.clicked_place().length; i++) {
+      self.clicked_place()[i].show(showVar);
+      self.clicked_place()[i].setVisible(showVar);
     }
   };
 
   self.setAllUnselected = function() {
 		for (var i = 0; i < self.no_places; i++) {
-			self.selected_place()[i].selection(false);
+			self.clicked_place()[i].selection(false);
 		}
 	};
 
