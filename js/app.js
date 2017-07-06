@@ -201,8 +201,8 @@ var viewModel = function () {
       success: function (data) {
 
         var out = data.response.venue;
-        counter_marker.likes = out.hasOwnProperty('likes') ? out.likes.summary : "Not Available";
-        counter_marker.rating = out.hasOwnProperty('rating') ? out.rating : "Not Available";
+        counter_marker.likes = out.likes.hasOwnProperty('summary') ? out.likes.summary : "Not Available";
+        counter_marker.rating = out.hasOwnProperty('rating') ? out.rating.summary : "Not Available";
         infowindow.setContent('<div id="placeinfo">' + '<h4>'+counter_marker.placename+'</h4>' + '<h5>'+'No. Of Likes: ' +
           counter_marker.likes + '</br></br>Ratings: ' +
           counter_marker.rating+'</h5>'+'</div>' );
