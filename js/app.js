@@ -170,14 +170,14 @@ var viewModel = function () {
         var out = data.response.venue;
         counter_marker.likes = out.likes.hasOwnProperty('summary') ? out.likes.summary : "Not Available";
         counter_marker.rating = out.hasOwnProperty('rating') ? out.rating.summary : "Not Available";
+        counter_marker.twitter=out.contact.twitter('') ? out.contact.twitter: "Not Available";
         infowindow.setContent('<div id="placeinfo">' + '<h4>'+counter_marker.placename+'</h4>' + '<h5>'+'No. Of Likes: ' +
           counter_marker.likes + '</br></br>Ratings: ' +
-          counter_marker.rating+'</h5>'+'</div>' );
-       
-        infowindow.open(map, counter_marker);
+          counter_marker.rating+'</h5>'+counter_marker.twitter+'</div>' );
+         infowindow.open(map, counter_marker)
       },
       error: function (e) {
-        self.showerror("Foursquare Data is Invalid ");
+        self.error("Foursquare Data is Invalid ");
       }
     });
   };
