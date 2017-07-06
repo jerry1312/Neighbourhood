@@ -23,10 +23,11 @@ header {
 	font-size: 30px;  
 }
 
-#pano {
-	width: 200px;
-	height: 200px;
-	border:5px solid #00a877;
+#placeinfo {
+	width: 170px;
+	height: 100px;
+	color: #0092CC;
+
 }
 
 a { 
@@ -74,4 +75,8 @@ h3 {
 	color: red;
 	font-size:20px;
 	text-align:center;
+}
+h4{
+	color: #0092CC;
+	text-decoration: underline;
 }
