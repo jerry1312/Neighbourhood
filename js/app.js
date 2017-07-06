@@ -1,4 +1,4 @@
-var models = [
+var places = [
   {
     placename: 'Siddharth Jewellers',
     placeID: "4ed9f8137ee5e8e3e65285ec",
@@ -95,27 +95,27 @@ var viewModel = function () {
 
   var highlightedIcon = self.makeMarkerIcon('green');
   var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-  var myIcon = iconBase + "ranger_station.png";
+  var mynewIcon = iconBase + "ranger_station.png";
 
 
-  models.forEach(function (counter) {
+  places.forEach(function (index_marker) {
 
     var marker = new google.maps.Marker({
-      placename: counter.placename,
-      position: { lat: counter.lat, lng: counter.lng },
-      show: ko.observable(counter.show),
-      placeID: counter.placeID,
-      selection: ko.observable(counter.selection),
-      animation: google.maps.Animation.DROP,
+      placename: index_marker.placename,
+      position: { lat: index_marker.lat, lng: index_marker.lng },
+      show: ko.observable(index_marker.show),
       map: map,
-      icon: myIcon,
+      selection: ko.observable(index_marker.selection),
+      animation: google.maps.Animation.DROP,
+      placeID: index_marker.placeID,
+      icon: mynewIcon,
       id: 1
     });
 
     self.selected_place.push(marker);
 
     marker.addListener('mouseout', function () {
-      this.setIcon(myIcon);
+      this.setIcon(mynewIcon);
     });
 
     marker.addListener('mouseover', function () {
@@ -139,13 +139,13 @@ var viewModel = function () {
     // Check  infowindow is not already opened through marker.
     if (infowindow.marker != marker) {
       // Clear the infowindow content streetview to load.
-      infowindow.setContent();
+      infowindow.setContent('');
       infowindow.marker = marker;
       //  marker property is cleared if  infowindow is closed.
       infowindow.addListener('closeclick', function () {
         if (infowindow.marker !== null)
-          infowindow.marker.setAnimation(null);
         infowindow.marker = null;
+      infowindow.marker.setAnimation(null);
       });
 
       var streetViewService = new google.maps.StreetViewService();
@@ -191,7 +191,7 @@ var viewModel = function () {
   };
   self.makeBounce = function (counter_marker) {
     counter_marker.setAnimation(google.maps.Animation.BOUNCE);
-    setTimeout(function () { counter_marker.setAnimation(null); }, 700);
+    setTimeout(function () { counter_marker.setAnimation(null); }, 999);
   };
 
   self.addApiInfo = function (counter_marker) {
@@ -201,10 +201,10 @@ var viewModel = function () {
       success: function (data) {
 
         var out = data.response.venue;
-        counter_marker.likes = out.likes.summary ? out.likes.summary : "No info available";
-        counter_marker.rating = out.hasOwnProperty('rating') ? out.rating : "No info Available";
-        infowindow.setContent('<div>' + counter_marker.placename + '</div><p>Likes: ' +
-          counter_marker.likes + '</p><p>Rating: ' +
+        counter_marker.likes = out.hasOwnProperty('likes') ? out.likes.summary : "Not Available";
+        counter_marker.rating = out.hasOwnProperty('rating') ? out.rating : "Not Available";
+        infowindow.setContent('<div>' + counter_marker.placename + '</div><p>No. Of Likes: ' +
+          counter_marker.likes + '</br>Ratings: ' +
           counter_marker.rating + '</p><div id="pano"></div>');
         var streetViewService = new google.maps.StreetViewService();
         var radius = 50;
@@ -212,7 +212,7 @@ var viewModel = function () {
         infowindow.open(map, counter_marker);
       },
       error: function (e) {
-        self.error("Foursquare Data is Invalid So,Please Try Again ");
+        self.diserror("Foursquare Data is Invalid ");
       }
     });
   };
