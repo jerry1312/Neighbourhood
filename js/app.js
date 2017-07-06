@@ -203,12 +203,10 @@ var viewModel = function () {
         var out = data.response.venue;
         counter_marker.likes = out.hasOwnProperty('likes') ? out.likes.summary : "Not Available";
         counter_marker.rating = out.hasOwnProperty('rating') ? out.rating : "Not Available";
-        infowindow.setContent('<div>' + counter_marker.placename + '</div><p>No. Of Likes: ' +
-          counter_marker.likes + '</br>Ratings: ' +
-          counter_marker.rating + '</p><div id="pano"></div>');
-        var streetViewService = new google.maps.StreetViewService();
-        var radius = 50;
-        streetViewService.getPanoramaByLocation(counter_marker.position, radius, self.getStreetView);
+        infowindow.setContent('<div id="placeinfo">' + '<h4>'+counter_marker.placename+'</h4>' + '<h5>'+'No. Of Likes: ' +
+          counter_marker.likes + '</br></br>Ratings: ' +
+          counter_marker.rating+'</h5>'+'</div>' );
+       
         infowindow.open(map, counter_marker);
       },
       error: function (e) {
